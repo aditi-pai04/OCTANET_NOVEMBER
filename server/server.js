@@ -29,7 +29,7 @@ mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 100000,
   })
   .then(() => console.log('MongoDB connected successfully'))
   .catch((error) => console.error('MongoDB connection error:', error));
@@ -38,6 +38,7 @@ mongoose
 app.use('/api/documents', documentRoutes);
 app.use('/api/users',userRoutes)
 
+server.timeout = 120000;
 
 // WebSocket connection
 io.on('connection', (socket) => {

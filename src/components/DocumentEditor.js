@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import './DocumentEditor.css';
 import axios from 'axios';
 
-const socket = io('http://localhost:5000');  // Connect to the WebSocket server
+const socket = io('http://localhost:5000'); // Connect to the WebSocket server
 
 const DocumentEditor = () => {
   const { documentId } = useParams(); // Get the document ID from the URL
@@ -14,8 +14,11 @@ const DocumentEditor = () => {
   const [error, setError] = useState('');
   const [isRenaming, setIsRenaming] = useState(false);
   const [shareEmail, setShareEmail] = useState('');
-  const [isPublic, setIsPublic] = useState(false); // Track public sharing
+  const [shareRole, setShareRole] = useState('viewer'); // Role for email sharing
+  const [isPublic, setIsPublic] = useState(false); // Track public sharing status
+  const [publicAccessRole, setPublicAccessRole] = useState('view'); // Default to "view" for public role
   const [userRole, setUserRole] = useState(null); // Track the user's role (owner, editor, viewer)
+  const userId = localStorage.getItem('userId'); 
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -25,18 +28,20 @@ const DocumentEditor = () => {
         setDocument(docData);
         setContent(docData.content);
         setFilename(docData.filename);
-        setIsPublic(docData.isPublic || false);  // Set public status
+        setIsPublic(docData.isPublic || false); // Set public status
+        setPublicAccessRole(docData.publicAccessRole || 'view'); // Set public role
 
         // Check if the current user is the owner, editor, or viewer
-        const userId = localStorage.getItem('userId');  // Assuming user ID is stored in local storage
         if (userId === docData.ownerId) {
           setUserRole('owner');
         } else if (docData.editorsId.includes(userId)) {
           setUserRole('editor');
         } else if (docData.viewersId.includes(userId)) {
           setUserRole('viewer');
+        } else if (docData.isPublic) {
+          setUserRole(docData.publicAccessRole); // Assign public access role if document is public
         } else {
-          setUserRole(null);  // No access if user is not in any list
+          setUserRole(null); // No access if user is not in any list
         }
       } catch (error) {
         console.error('Error fetching document:', error);
@@ -85,24 +90,28 @@ const DocumentEditor = () => {
 
   const handleShare = async () => {
     if (isPublic) {
-      // Public sharing
+      // Public sharing with selected access role (view or edit)
       try {
         await axios.post(`http://localhost:5000/api/documents/${documentId}/share`, {
+          userId: userId,
           isPublic: true,
+          publicAccessRole: publicAccessRole // Set the selected public access role
         });
-        alert('Document shared publicly!');
+        alert(`Document shared publicly with ${publicAccessRole} access!`);
       } catch (error) {
         console.error('Error sharing document publicly:', error);
         setError('Failed to share document publicly.');
       }
     } else if (shareEmail) {
-      // Private sharing with email
+      // Private sharing with email and selected role
       try {
         await axios.post(`http://localhost:5000/api/documents/${documentId}/share`, {
+          userId: userId,
           email: shareEmail,
-          isPublic: false, // Set to false for private sharing
+          role: shareRole, // Pass the selected role for the email
+          isPublic: false // Set to false for private sharing
         });
-        alert('Document shared successfully with the entered email!');
+        alert(`Document shared successfully with ${shareEmail} as ${shareRole}!`);
       } catch (error) {
         console.error('Error sharing document via email:', error);
         setError('Failed to share document via email.');
@@ -143,35 +152,61 @@ const DocumentEditor = () => {
             value={content}
             onChange={handleContentChange}
             placeholder="Write your document here..."
-            disabled={userRole !== 'editor' && userRole !== 'owner'}
+            disabled={userRole !== 'editor' && userRole !== 'owner' && !(isPublic && publicAccessRole === 'edit')}
           />
 
-          <div className="share-container">
-            <label>
-              <input
-                type="checkbox"
-                checked={isPublic}
-                onChange={(e) => setIsPublic(e.target.checked)}
-                disabled={userRole !== 'owner'}
-              />
-              Public Sharing (Anyone can view/edit)
-            </label>
-
-            {!isPublic && userRole !== 'viewer' && (
-              <>
+          {userRole === 'owner' || userRole === 'editor' ? (
+            <div className="share-container">
+              <label>
                 <input
-                  type="email"
-                  value={shareEmail}
-                  onChange={(e) => setShareEmail(e.target.value)}
-                  placeholder="Enter email to share"
+                  type="checkbox"
+                  checked={isPublic}
+                  onChange={(e) => setIsPublic(e.target.checked)}
+                  disabled={userRole !== 'owner'}
                 />
-                <button onClick={handleShare}>Share via Email</button>
-              </>
-            )}
-          </div>
+                Public Sharing (Anyone can view/edit)
+              </label>
 
-          {userRole === 'viewer' && (
+              {isPublic && userRole === 'owner' && (
+                <div>
+                  <label>Public Access Role:</label>
+                  <select
+                    value={publicAccessRole}
+                    onChange={(e) => setPublicAccessRole(e.target.value)}
+                  >
+                    <option value="view">View Only</option>
+                    <option value="edit">Edit</option>
+                  </select>
+                </div>
+              )}
+
+              {!isPublic && userRole !== 'viewer' && (
+                <>
+                  <input
+                    type="email"
+                    value={shareEmail}
+                    onChange={(e) => setShareEmail(e.target.value)}
+                    placeholder="Enter email to share"
+                  />
+                  <select value={shareRole} onChange={(e) => setShareRole(e.target.value)}>
+                    <option value="viewer">Viewer</option>
+                    <option value="editor">Editor</option>
+                  </select>
+                </>
+              )}
+
+              {/* Share Button */}
+              <button onClick={handleShare} className="share-button">
+                Share
+              </button>
+            </div>
+          ) : null}
+
+          {userRole === 'viewer' && !isPublic && (
             <p className="viewer-message">You are currently a viewer. You can only view this document.</p>
+          )}
+          {isPublic && publicAccessRole === 'view' && (
+            <p className="viewer-message">Public view-only access. Editing is disabled.</p>
           )}
         </>
       ) : (

@@ -45,7 +45,9 @@ router.post('/create', async (req, res) => {
         $or: [
           { ownerId: userId },                    // Owner documents
           { viewersId: userId },                    // Viewer documents
-          { editorsId: userId }                     // Editor documents
+          { editorsId: userId }  ,
+          {publicAccessRole: 'view'},
+          {publicAccessRole: 'edit'}                   // Editor documents
         ]
       })
       .sort({ createdAt: -1 })  // Sort by most recent documents first
@@ -103,22 +105,36 @@ router.post('/create', async (req, res) => {
   });
   router.post('/:documentId/share', async (req, res) => {
     const { documentId } = req.params;
-    const { email, isPublic } = req.body;
-  
+    const { userId, email, publicAccessRole, isPublic, role } = req.body;  // Make sure to capture the role for sharing
+    
     try {
+      // Fetch the document from the database
       const document = await Document.findById(documentId);
       if (!document) {
         return res.status(404).send('Document not found.');
       }
   
+      // Only the owner or an editor can share the document
+      if (document.ownerId.toString() !== userId && !document.editorsId.includes(userId)) {
+        return res.status(403).send('You do not have permission to share this document.');
+      }
+  
       // Initialize viewers and editors arrays if they are undefined
-      document.viewers = document.viewers || [];
-      document.editors = document.editors || [];
+      document.viewersId = document.viewersId || [];
+      document.editorsId = document.editorsId || [];
   
       if (isPublic) {
         // Public sharing - update document to be accessible publicly
         document.isPublic = true;
+        document.publicAccessRole = publicAccessRole; // Set the public access level
+  
+        // // Clear existing viewers/editors to avoid conflicts with public access
+        // document.viewersId = [];
+        // document.editorsId = [];
+  
+        // Log the document before saving
         console.log('Document before saving (Public):', document);
+  
         await document.save();
         console.log('Document saved successfully (Public).');
         return res.status(200).send('Document is now shared publicly!');
@@ -126,46 +142,31 @@ router.post('/create', async (req, res) => {
         // Private sharing - Find user by email
         const user = await User.findOne({ email });
         if (!user) {
-          return res.status(404).send('User with the provided email not found.');
+          return res.status(404).send('User with that email not found.');
         }
   
-        const userId = user._id;
-  
-        // Check if userId already exists in viewers or editors
-        let updated = false;
-        if (!document.viewersId.includes(userId)) {
-          document.viewersId.push(userId);
-          updated = true;
-        }
-        if (!document.editorsId.includes(userId)) {
-          document.editorsId.push(userId);
-          updated = true;
+        // Assign the user to the appropriate role
+        if (role === 'viewer') {
+          if (!document.viewersId.includes(user._id)) {
+            document.viewersId.push(user._id);
+          }
+        } else if (role === 'editor') {
+          if (!document.editorsId.includes(user._id)) {
+            document.editorsId.push(user._id);
+          }
         }
   
-        // Log before saving
-        console.log('Document before saving (Private):', document);
-  
-        // If the document was updated, save it
-        if (updated) {
-          document.markModified('viewers');
-          document.markModified('editors');
-          await document.save();
-          console.log('Document saved successfully (Private).');
-          return res.status(200).send('Document shared privately with the user!');
-        } else {
-          return res.status(200).send('User already has access to this document.');
-        }
+        await document.save();
+        console.log('Document shared successfully via email');
+        return res.status(200).send(`Document shared successfully with ${email} as ${role}!`);
       } else {
-        return res.status(400).send('Please provide an email for private sharing.');
+        return res.status(400).send('Email or public sharing must be provided.');
       }
     } catch (error) {
       console.error('Error sharing document:', error);
-      res.status(500).send('Failed to share document.');
+      res.status(500).send('An error occurred while sharing the document.');
     }
   });
-  
-  
-  
   
   
 module.exports = router;

@@ -1,140 +1,108 @@
-/* General container for the document editor */
+/* src/components/DocumentEditor.css */
+
 .document-editor-container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-  }
-  
-  /* Error message styling */
-  .error {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #ffebeb;
-    border-radius: 4px;
-    border: 1px solid #ff0000;
-  }
-  
-  /* Title container, includes document name and renaming functionality */
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  h2 span {
-    font-weight: bold;
-  }
-  
-  button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  /* Styling for the input field in renaming mode */
-  input[type="text"] {
-    padding: 10px;
-    font-size: 16px;
-    width: 70%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-    outline: none;
-    transition: border-color 0.3s ease;
-  }
-  
-  input[type="text"]:focus {
-    border-color: #007bff;
-  }
-  
-  /* Document content area (textarea) */
-  .document-content {
-    width: 100%;
-    height: 400px;
-    padding: 15px;
-    font-size: 16px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    resize: none;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-  }
-  
-  .document-content:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  /* Save button styling */
-  .save-button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .save-button:hover {
-    background-color: #218838;
-  }
-  
-  .save-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  /* Mobile responsiveness */
-  @media (max-width: 600px) {
-    .document-editor-container {
-      padding: 15px;
-    }
-  
-    .document-content {
-      height: 300px;
-    }
-  
-    h2 {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    h2 button {
-      margin-top: 10px;
-    }
-  
-    .rename-container {
-      width: 100%;
-    }
-  
-    .save-button, button {
-      width: 100%;
-    }
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 2rem;
+  padding-bottom: 4rem; /* Ensures space for fixed footer if needed */
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.document-editor-container h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.document-editor-container input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 1rem;
+}
+
+.document-editor-container button {
+  background-color: #FF6F61;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.document-editor-container button:hover {
+  background-color: #FF3B30;
+}
+
+.document-content {
+  width: 100%;
+  height: 300px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  resize: vertical;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.share-container {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.share-container label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.share-container input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.share-container input[type="email"] {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  max-width: 300px;
+}
+
+.error {
+  color: #FF3B30;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.cta-buttons {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.cta-buttons .btn {
+  background-color: #FF6F61;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  margin: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.cta-buttons .btn:hover {
+  background-color: #FF3B30;
+}
