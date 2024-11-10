@@ -1,0 +1,42 @@
+/* src/components/Dashboard.css */
+
+.dashboard-container {
+    padding: 2rem;
+  }
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+  
+  .create-document-btn {
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .create-document-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .document-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .document-list li {
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .document-list li:hover {
+    background-color: #f5f5f5;
+  }
+  
