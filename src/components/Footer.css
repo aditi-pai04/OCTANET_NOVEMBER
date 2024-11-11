@@ -5,9 +5,11 @@ footer {
     background-color: #333;
     color: white;
     text-align: center;
-    padding: 1rem;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 95%;
+    margin:0;
+    max-height:5%;
+    padding:0
   }
   

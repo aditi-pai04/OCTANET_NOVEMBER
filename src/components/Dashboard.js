@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard.css';
+import Footer from './Footer';
 
 const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
@@ -81,7 +82,9 @@ const Dashboard = () => {
       ) : (
         <p>No documents found. Start by creating a new document.</p>
       )}
+      <Footer/>
     </div>
+
   );
 };
 

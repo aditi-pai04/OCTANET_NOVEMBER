@@ -8,6 +8,7 @@ const documentRoutes = require('./routes/documentRoutes');
 const cors = require('cors');
 const userRoutes=require('./routes/userRoutes')
 const Document=require('./models/Document')
+const feedbackRoutes=require('./routes/supportRoutes')
 
 // Load environment variables
 dotenv.config();
@@ -37,6 +38,7 @@ mongoose
 // Routes
 app.use('/api/documents', documentRoutes);
 app.use('/api/users',userRoutes)
+app.use('/api/feedback', feedbackRoutes);
 
 server.timeout = 120000;
 

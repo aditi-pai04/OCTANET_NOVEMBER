@@ -1,79 +1,97 @@
 /* src/components/Register.css */
 
 .register-container {
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .register-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .input-group {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 5px;
-  }
-  
-  input:focus {
-    outline: none;
-    border-color: #FF6F61;
-  }
-  
-  .submit-btn {
-    background-color: #FF6F61;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .submit-btn:hover {
-    background-color: #FF3B30;
-  }
-  
-  .error {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  p {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  a {
-    color: #FF6F61;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.register-container h2 {
+  font-size: 2.5rem;
+  color: #FF6F61;
+  margin-bottom: 2rem;
+}
+
+.register-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: block;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #FF6F61;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #FF6F61;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 30px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #FF3B30;
+}
+
+.error {
+  color: #FF3B30;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.success {
+  color: #4CAF50;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.register-container p {
+  margin-top: 1.5rem;
+  color: #666;
+}
+
+.register-container a {
+  color: #FF6F61;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-container a:hover {
+  color: #FF3B30;
+}

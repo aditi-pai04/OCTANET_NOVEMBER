@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'; // Add your styles here
 import axios from 'axios';
+import Footer from './Footer';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -43,6 +44,7 @@ const Login = () => {
 
 
   return (
+    <>
     <div className="login-container">
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit} className="login-form">
@@ -80,6 +82,8 @@ const Login = () => {
         Don’t have an account? <a href="/register">Register</a>
       </p>
     </div>
+    <Footer/>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import Footer from './Footer';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -40,6 +41,7 @@ const Register = () => {
   };
 
   return (
+    <>
     <div className="register-container">
       <h2>Create an Account</h2>
       <form onSubmit={handleSubmit} className="register-form">
@@ -87,6 +89,8 @@ const Register = () => {
 
       <p>Already have an account? <a href="/signin">Sign In</a></p>
     </div>
+    <Footer/>
+    </>
   );
 };
 

@@ -1,42 +1,76 @@
 /* src/components/Dashboard.css */
 
 .dashboard-container {
-    padding: 2rem;
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 1rem;
-  }
-  
+  padding: 4rem 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.dashboard-container h2 {
+  font-size: 2.5rem;
+  color: #FF6F61;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.create-document-btn {
+  background-color: #FF6F61;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+.create-document-btn:hover {
+  background-color: #FF3B30;
+}
+
+.document-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.document-list li {
+  background-color: white;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.document-list li:hover {
+  background-color: #FFEBE8;
+  transform: translateY(-3px);
+}
+
+.error {
+  color: #FF3B30;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
   .create-document-btn {
-    padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+      font-size: 0.9rem;
+      padding: 8px 16px;
   }
-  
-  .create-document-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .document-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
+
   .document-list li {
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
+      font-size: 1rem;
+      padding: 12px 16px;
   }
-  
-  .document-list li:hover {
-    background-color: #f5f5f5;
-  }
-  
+}

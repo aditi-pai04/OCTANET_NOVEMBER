@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import './DocumentEditor.css';
+import Navbar from './Navbar';
 import axios from 'axios';
+import Footer from './Footer';
 
 const socket = io('http://localhost:5000'); // Connect to the WebSocket server
 
@@ -122,6 +124,8 @@ const DocumentEditor = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="document-editor-container">
       {error && <p className="error">{error}</p>}
       {document ? (
@@ -213,6 +217,8 @@ const DocumentEditor = () => {
         <p>Loading document...</p>
       )}
     </div>
+    <Footer/>
+    </>
   );
 };
 

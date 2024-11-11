@@ -1,0 +1,78 @@
+/* src/components/Support.css */
+
+.support-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .support-page h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .support-page p {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .support-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .support-form label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .support-form input[type="text"],
+  .support-form input[type="email"],
+  .support-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  .support-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .submit-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #FF3B30;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+    background-color: #FF3B30;
+  }
+  
+  .status-message {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #4CAF50;
+    text-align: center;
+  }
+  

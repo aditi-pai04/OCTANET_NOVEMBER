@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import DocumentEditor from './components/DocumentEditor';
+import Support from './components/Support';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/signin" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/document/:documentId" element={<DocumentEditor />} />
+        <Route path="/support" element={<Support />} />
         {/* You can add more routes like /signin and /register here */}
       </Routes>
     </Router>
